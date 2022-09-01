@@ -1,11 +1,16 @@
 import random
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 class TicTacToe:
     def __init__(self):
         self.board = [' '] * 10
+        logger.info("Game Started")
 
     def display_board(self):
+        logger.info("Board Displayed")
         print('   |   |')
         print(' ' + self.board[7] + ' | ' + self.board[8] + ' | ' + self.board[9])
         print('   |   |')
@@ -25,15 +30,19 @@ class TicTacToe:
         while not (marker == 'X' or marker == 'O'):
             marker = input('Player 1: Do you want to be X or O? ').upper()
 
+        logger.info(f"Player 1 input {marker}")
+
         if marker == 'X':
             return 'X', 'O'
         else:
             return 'O', 'X'
 
     def place_marker(self, marker, position):
+        logger.info(f"Marker {marker} Placed at {position}")
         self.board[position] = marker
 
     def win_check(self, mark):
+        logger.info(f"Checking Win For {mark}")
         if self.board[7] == mark and self.board[8] == mark and self.board[9] == mark:
             # Horizontal Top
             return True
@@ -70,14 +79,18 @@ class TicTacToe:
     @staticmethod
     def choose_first():
         if random.randint(0, 1) == 0:
+            logger.info(f"Player 2 will go first ")
             return 'Player 2'
         else:
+            logger.info(f"Player 1 will go first ")
             return 'Player 1'
 
     def space_check(self, position):
+        logger.info(f"Checking space on the board ")
         return self.board[position] == ' '
 
     def full_board_check(self):
+        logger.info(f"Checking space on the board ")
         for i in range(1, 10):
             if self.space_check(i):
                 return
@@ -89,9 +102,9 @@ class TicTacToe:
             position = int(input('Choose your next position: (1-9) '))
             if position == -1:
                 break
-
         return position
 
     @staticmethod
     def replay():
+        logger.info(f"Game Reset ")
         return input('Do you want to play again? Enter Yes or No: ').lower().startswith('y')
